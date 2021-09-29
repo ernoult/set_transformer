@@ -43,9 +43,11 @@ mog = MixtureOfMVNs(mvn)
 dim_output = 2*D
 
 if args.net == 'set_transformer':
-    net = SetTransformer(D, K, dim_output).cuda()
+    #net = SetTransformer(D, K, dim_output).cuda()
+    net = SetTransformer(D, K, dim_output)
 elif args.net == 'deepset':
-    net = DeepSet(D, K, dim_output).cuda()
+    #net = DeepSet(D, K, dim_output).cuda()
+    net = DeepSet(D, K, dim_output)
 else:
     raise ValueError('Invalid net {}'.format(args.net))
 benchfile = os.path.join('benchmark', 'mog_{:d}.pkl'.format(K))
@@ -114,7 +116,7 @@ def test(bench, verbose=True):
     data, oracle_ll = bench
     avg_ll = 0.
     for X in data:
-        X = X.cuda()
+        #X = X.cuda()
         avg_ll += mog.log_prob(X, *mvn.parse(net(X))).item()
     avg_ll /= len(data)
     line = 'test ll {:.4f} (oracle {:.4f})'.format(avg_ll, oracle_ll)
