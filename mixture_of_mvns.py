@@ -39,6 +39,7 @@ class MixtureOfMVNs(object):
     def log_prob(self, X, pi, params, return_labels=False):
         ll = self.mvn.log_prob(X, params)
         ll = ll + (pi + 1e-10).log().unsqueeze(-2)
+        print('ll before average: {}'.format(ll.size()))
         if return_labels:
             labels = ll.argmax(-1)
             return ll.logsumexp(-1).mean(), labels
@@ -47,6 +48,8 @@ class MixtureOfMVNs(object):
 
     def plot(self, X, labels, params, axes):
         mu, cov = self.mvn.stats(params)
+        print('Size of mu: {}'.format(mu.size()))
+        print('Size of cov: {}'.format(cov.size()))     
         for i, ax in enumerate(axes.flatten()):
             scatter_mog(X[i].cpu().data.numpy(),
                     labels[i].cpu().data.numpy(),

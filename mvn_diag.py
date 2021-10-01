@@ -10,8 +10,14 @@ class MultivariateNormalDiag(MultivariateNormal):
     def sample(self, B, K, labels):
         N = labels.shape[-1]
         device = labels.device
-        mu = -4 + 8*torch.rand(B, K, self.dim).to(device)
-        sigma = 0.3*torch.ones(B, K, self.dim).to(device)
+        
+        #Default parameters
+        #mu = -4 + 8*torch.rand(B, K, self.dim).to(device)
+        #sigma = 0.3*torch.ones(B, K, self.dim).to(device)
+        
+        mu = -10 + 20*torch.rand(B, K, self.dim).to(device)
+        sigma = 0.4*torch.ones(B, K, self.dim).to(device)
+        
         eps = torch.randn(B, N, self.dim).to(device)
 
         rlabels = labels.unsqueeze(-1).repeat(1, 1, self.dim)
