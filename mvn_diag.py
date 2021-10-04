@@ -16,7 +16,7 @@ class MultivariateNormalDiag(MultivariateNormal):
         #sigma = 0.3*torch.ones(B, K, self.dim).to(device)
         
         mu = -10 + 20*torch.rand(B, K, self.dim).to(device)
-        sigma = 0.4*torch.ones(B, K, self.dim).to(device)
+        sigma = 0.3*torch.ones(B, K, self.dim).to(device)
         
         eps = torch.randn(B, N, self.dim).to(device)
 
@@ -27,16 +27,13 @@ class MultivariateNormalDiag(MultivariateNormal):
 
     def log_prob(self, X, params):
         mu, sigma = params
-        #print('X size: {}'.format(X.size()))
-        #print('mu size: {}'.format(mu.size()))
-        #print('sigma size: {}'.format(sigma.size()))
         dim = self.dim
         X = X.unsqueeze(2)
         mu = mu.unsqueeze(1)
         sigma = sigma.unsqueeze(1)
         diff = X - mu
-        #print('diff size: {}'.format(diff.size()))
-        ll = -0.5*math.log(2*math.pi) - sigma.log() - 0.5*(diff.pow(2)/sigma.pow(2))
+        #ll = -0.5*math.log(2*math.pi) - sigma.log() - 0.5*(diff.pow(2)/sigma.pow(2))
+        ll = -0.5*dim*math.log(2*math.pi) - dim*(sigma.log()) - 0.5*(diff.pow(2)/sigma.pow(2))
         return ll.sum(-1)
 
     def stats(self, params):
