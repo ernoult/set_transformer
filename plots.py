@@ -98,7 +98,6 @@ def rect_for_plots(rects):
     
     return R
 
-
     
 def draw_ellipse(pos, cov, ax=None, **kwargs):
     if type(pos) != np.ndarray:
